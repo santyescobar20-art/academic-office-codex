@@ -12,8 +12,8 @@ from matplotlib.patches import Patch
 ROOT = Path(__file__).resolve().parents[1]
 TAB, FIG = ROOT / "manuscript/tables", ROOT / "manuscript/figures"
 FIG.mkdir(parents=True, exist_ok=True)
-plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 9, "axes.spines.top": False,
-                     "axes.spines.right": False, "figure.dpi": 150, "savefig.dpi": 300})
+plt.rcParams.update({"font.family": "Liberation Sans", "font.size": 9, "axes.spines.top": False,
+                     "axes.spines.right": False, "figure.dpi": 150, "savefig.dpi": 600})
 C = {"core": "#8c2d04", "exp": "#f16913", "bord": "#6baed6", "int": "#d9d9d9"}
 
 p = pd.read_csv(ROOT / "data/processed/panel.csv", dtype={"g": str, "g_nb": str})
@@ -73,7 +73,7 @@ def es_plot(ax, f, title):
     ax.errorbar(x, e["irr"], yerr=[e["irr"] - e["irr_lo"], e["irr_hi"] - e["irr"]], fmt="o-", color="#08519c",
                 ms=4, lw=1.1, capsize=2.5)
     ax.set_yscale("log"); ax.set_yticks([0.4, 0.6, 0.8, 1, 1.5, 2, 2.5]); ax.set_yticklabels(["0.4", "0.6", "0.8", "1", "1.5", "2", "2.5"])
-    ax.minorticks_off(); ax.set_title(title, loc="left", fontsize=9)
+    ax.minorticks_off()
     ax.set_ylabel("Incidence rate ratio\n(reference: months −3 to −1)")
 
 fig, axs = plt.subplots(2, 1, figsize=(6.5, 6))
@@ -81,8 +81,9 @@ cm = pd.read_csv(TAB / "direct_counts_by_month.csv")
 axs[0].bar(cm["rel"], cm["treated"], color=C["exp"], width=0.8, label="Covered cantons")
 axs[0].plot(cm["rel"], cm["control"], color="#636363", lw=1.4, marker="o", ms=2.5, label="Interior never-covered cantons")
 axs[0].axvline(-0.5, color="k", lw=0.7, ls=":"); axs[0].set_ylabel("Homicides per month\n(summed over stacks)")
-axs[0].legend(frameon=False, fontsize=7.5, loc="upper left"); axs[0].set_title("A. Raw counts", loc="left", fontsize=9)
-es_plot(axs[1], "event_direct.csv", "B. Event-study estimates")
+axs[0].legend(frameon=False, fontsize=7.5, loc="upper left"); axs[0].text(-0.13, 1.02, "a", transform=axs[0].transAxes, fontsize=11, fontweight="bold")
+es_plot(axs[1], "event_direct.csv", "")
+axs[1].text(-0.13, 1.02, "b", transform=axs[1].transAxes, fontsize=11, fontweight="bold")
 axs[1].set_xlabel("Months relative to first coverage by a targeted decree")
 fig.tight_layout(); fig.savefig(FIG / "fig3_direct.png", bbox_inches="tight"); plt.close(fig)
 

@@ -147,9 +147,9 @@ Standard errors clustered by province (24 clusters). Observations in cantons wit
 
 ### Direct effects in the expansion cohorts
 
-Panel A of Fig. 3 shows the raw monthly counts in the stacked sample. Entering cantons recorded about 94 homicides a month between 18 and 4 months before entry, 139 in the three months before entry, and 89 in the nine months from entry. The comparison cantons show no such movement. Relative to them, the last pre-entry quarter stood 62% above baseline and the post-entry period stood exactly at baseline (ratio 1.00).
+Figure 3a shows the raw monthly counts in the stacked sample. Entering cantons recorded about 94 homicides a month between 18 and 4 months before entry, 139 in the three months before entry, and 89 in the nine months from entry. The comparison cantons show no such movement. Relative to them, the last pre-entry quarter stood 62% above baseline and the post-entry period stood exactly at baseline (ratio 1.00).
 
-The event-study estimates in Panel B say the same thing in another way. Relative to the quarter before entry, post-entry homicide is 32% to 47% lower, but so is homicide four to six quarters before entry. The pre-entry coefficients are jointly different from zero (χ² = 22.5, 5 df, p < .001). Parallel trends does not hold in the months leading up to a decree, and the direction of the failure is what the decrees' own recitals would lead one to expect.
+The event-study estimates in Fig. 3b say the same thing in another way. Relative to the quarter before entry, post-entry homicide is 32% to 47% lower, but so is homicide four to six quarters before entry. The pre-entry coefficients are jointly different from zero (χ² = 22.5, 5 df, p < .001). Parallel trends does not hold in the months leading up to a decree, and the direction of the failure is what the decrees' own recitals would lead one to expect.
 
 Table 3 gives the pooled estimates. The baseline IRR is 0.87 (0.70–1.08; randomisation p = .58). Removing the three months before entry from the comparison period moves it to 0.95 (0.72–1.24), and removing six months to 1.02 (0.76–1.38). Under the opposite assumption, that the pre-entry divergence would have continued at its estimated slope of 3.9% a month, the IRR is 0.53 (0.42–0.68). The direct effect is therefore bounded between no change and a halving of homicide, and the data on entering cantons alone cannot choose within that range.
 
@@ -300,6 +300,6 @@ Wooldridge JM (2023) Simple approaches to nonlinear difference-in-differences wi
 
 **Fig. 2** Monthly homicide rate per 100,000 inhabitants (annualised, three-month centred mean) by coverage group, January 2019 to September 2026. The shaded band marks the nationwide state of exception; the dotted line marks the first targeted decree
 
-**Fig. 3** Homicide around first coverage by a targeted state of exception, expansion cohorts. Panel A: monthly homicides summed over stacks in entering cantons (bars) and interior never-covered cantons (line). Panel B: incidence rate ratios by quarter relative to entry from Eq. (2), with 95% confidence intervals from province-clustered standard errors
+**Fig. 3** Homicide around first coverage by a targeted state of exception, expansion cohorts. a Monthly homicides summed over stacks in entering cantons (bars) and interior never-covered cantons (line). b Incidence rate ratios by quarter relative to entry from Eq. (2), with 95% confidence intervals from province-clustered standard errors
 
 **Fig. 4** Homicide in uncovered cantons around the first coverage of a bordering canton. Incidence rate ratios by quarter relative to exposure from Eq. (2), with 95% confidence intervals from province-clustered standard errors
