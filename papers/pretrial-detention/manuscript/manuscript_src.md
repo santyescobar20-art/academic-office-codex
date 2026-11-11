@@ -36,13 +36,13 @@ Practice diverged from the text. Studies by the Public Defender's Office and reg
 
 In Ecuador the plenary of the National Court of Justice may issue resolutions "in case of doubt or obscurity of the laws", which are general and binding until the legislature provides otherwise (Organic Code of the Judiciary, art. 180.6). They are the closest domestic equivalent to a binding interpretive precedent and are distinct from ordinary case law.
 
-Resolution 14-2021 was adopted on 15 December 2021 on the proposal of the president of the Court's criminal chamber. It states that pretrial detention is the most coercive measure available and must be applied as a last resort; that the prosecutor, when requesting it, must substantiate each of the requirements of article 534; and that the judge's decision must be reasoned with reference to those same requirements, including why alternative measures would not suffice. Contemporary press coverage presented it as an instrument to reduce the number of detainees without a sentence and stressed its binding force (González, 2021). Practitioners quoted at the time added a caveat that matters for what follows: the resolution, they said, contained nothing new and merely asked judges and prosecutors to comply with the Code.
+Resolution 14-2021 was adopted on 15 December 2021 on the proposal of the president of the Court's criminal chamber. It makes three points, as the Court itself later summarised them. Pretrial detention is an exceptional measure, to be ordered as a last resort and only when no other precautionary measure would be useful and effective. The prosecutor must substantiate the requirements of article 534 and show a procedural risk that the alternatives cannot contain. And the judge's decision must be reasoned on four matters: that the facts fit an offence punishable with more than one year of imprisonment; that the evidence makes the accused's participation probable; that the alternatives are insufficient; and that detention is suitable, necessary and proportionate (Corte Nacional de Justicia, 2024). Contemporary press coverage presented it as an instrument to reduce the number of detainees without a sentence and stressed its binding force (González, 2021). Practitioners quoted at the time added a caveat that matters for what follows: the resolution, they said, contained nothing new and merely asked judges and prosecutors to comply with the Code.
 
 ## 2.3 What else was happening
 
 The resolution did not arrive in a quiet period, and any credible evaluation has to deal with four concurrent developments.
 
-On 18 August 2021 the Constitutional Court, in judgment 8-20-CN/21, struck down the final paragraph of article 536 COIP, which had prohibited replacing pretrial detention with a milder measure for offences punishable with more than five years of imprisonment. The ruling widened the set of detainees who could ask for substitution.
+On 18 August 2021 the Constitutional Court, in judgment 8-20-CN/21, struck down the provision of article 536 COIP that prohibited replacing pretrial detention with a milder measure for offences punishable with more than five years of imprisonment. From then on any detainee could ask for substitution, whatever the penalty attached to the charge.
 
 On 28 September 2021 more than a hundred inmates were killed in the Litoral penitentiary in Guayaquil. The government declared a state of exception in the prison system and announced a decongestion policy that included pardons for sentenced prisoners. The massacre made overcrowding a matter of daily public debate, and judges ordering detention knew where detainees would be sent.
 
@@ -232,7 +232,7 @@ Inter-American Commission on Human Rights. (2013). *Report on the use of pretria
 
 Inter-American Commission on Human Rights. (2017). *Report on measures aimed at reducing the use of pretrial detention in the Americas* (OEA/Ser.L/V/II.163, Doc. 105). Organization of American States.
 
-Inter-American Commission on Human Rights. (2022). *Persons deprived of liberty in Ecuador* (OEA/Ser.L/V/II, Doc. 44/22). Organization of American States.
+Inter-American Commission on Human Rights. (2022). *Persons deprived of liberty in Ecuador* (approved 21 February 2022). Organization of American States.
 
 Kleinberg, J., Lakkaraju, H., Leskovec, J., Ludwig, J., & Mullainathan, S. (2018). Human decisions and machine predictions. *The Quarterly Journal of Economics, 133*(1), 237-293. https://doi.org/10.1093/qje/qjx032
 
@@ -271,6 +271,8 @@ Código Orgánico de la Función Judicial (2009), art. 180.6.
 Corte Constitucional del Ecuador, Sentencia No. 8-20-CN/21, 18 August 2021.
 
 Corte Nacional de Justicia, Pleno, Resolución No. 14-2021, 15 December 2021.
+
+Corte Nacional de Justicia. (2024). Habeas corpus judgment summarising Resolución No. 14-2021. *Registro Oficial, Edición Jurídica* No. 415, 31 May 2024.
 
 **Data sources**
 
