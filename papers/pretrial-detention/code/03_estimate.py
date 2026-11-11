@@ -128,7 +128,20 @@ def canton_models(k: pd.DataFrame) -> None:
         rows.append(t)
     did = pd.concat(rows)
     did["pct"] = np.expm1(did["b"]) * 100
+    did["pct_lo"] = np.expm1(did["lo"]) * 100
+    did["pct_hi"] = np.expm1(did["hi"]) * 100
     did.to_csv(TAB / "t4_did.csv", index=False)
+    b0 = did[(did["spec"] == "baseline") & (did["term"] == "z_early")].iloc[0]
+    iqr = (k.drop_duplicates("unit")["base_rate"].quantile(.75)
+           - k.drop_duplicates("unit")["base_rate"].quantile(.25)) / k.drop_duplicates("unit")["base_rate"].std()
+    results["bounds"] = {
+        "early_pct_per_sd": float(b0["pct"]), "early_ci_lo": float(b0["pct_lo"]),
+        "early_ci_hi": float(b0["pct_hi"]),
+        "largest_relative_decline_ruled_out_per_sd": float(-b0["pct_lo"]),
+        "iqr_in_sd": float(iqr),
+        "largest_decline_ruled_out_p25_to_p75": float(-np.expm1(b0["lo"] * iqr) * 100),
+        "mde_80_pct_per_sd": float(np.expm1(2.8 * b0["se"]) * 100),
+    }
 
     # (4) placebo timing: pretend the rule arrived two years earlier, pre-data only
     pk = k[k["year"] <= 2021].copy()
@@ -185,24 +198,40 @@ def judge_models(k: pd.DataFrame) -> None:
     t.to_csv(TAB / "t6_within_judge.csv", index=False)
 
 
-# ------------------------------------------------------- prison stock (ITS)
+# ---------------------------------------- prison stock: discontinuity in time
+def local_jump(w: pd.DataFrame, cut: pd.Timestamp, y: str, bw: int) -> tuple[float, float]:
+    """Local-linear jump in y at `cut`, using `bw` weeks on each side."""
+    d = w[(w["date"] >= cut - pd.Timedelta(weeks=bw)) & (w["date"] < cut + pd.Timedelta(weeks=bw))].copy()
+    d["t"] = (d["date"] - cut).dt.days / 7.0
+    d["post"] = (d["t"] >= 0).astype(int)
+    d["t_post"] = d["t"] * d["post"]
+    f = sm.OLS(d[y], sm.add_constant(d[["t", "post", "t_post"]])).fit(
+        cov_type="HAC", cov_kwds={"maxlags": 4})
+    return float(f.params["post"]), float(f.bse["post"])
+
+
 def stock_its() -> None:
     w = pd.read_csv(PROC / "snai_weekly.csv", parse_dates=["date"])
+    # the series is redefined in January 2023 (about 3,600 people move from
+    # "unsentenced" to "sentenced" in a single week), so the test stops in 2022
+    pre = w[w["date"] < "2023-01-01"]
     rows = []
-    for label, lo, hi in [("2019-2022", "2019-01-01", "2022-12-31"),
-                          ("2021-2022", "2021-01-01", "2022-12-31")]:
-        d = w[(w["date"] >= lo) & (w["date"] <= hi)].copy()
-        d["t"] = (d["date"] - RESOLUTION).dt.days / 7.0
-        d["post"] = (d["date"] >= RESOLUTION).astype(int)
-        d["t_post"] = d["t"] * d["post"]
-        d["covid"] = d["date"].between("2020-03-16", "2020-09-13").astype(int)
-        for y in ("unsentenced", "sentenced", "unsentenced_share"):
-            X = sm.add_constant(d[["t", "post", "t_post", "covid"]])
-            f = sm.OLS(d[y], X).fit(cov_type="HAC", cov_kwds={"maxlags": 8})
-            for term in ("post", "t_post"):
-                rows.append({"window": label, "outcome": y, "term": term, "b": f.params[term],
-                             "se": f.bse[term], "p": f.pvalues[term], "n": int(f.nobs)})
-    pd.DataFrame(rows).to_csv(TAB / "t7_stock_its.csv", index=False)
+    for y in ("unsentenced", "sentenced", "unsentenced_share"):
+        for bw in (8, 12, 20):
+            b, se = local_jump(pre, RESOLUTION, y, bw)
+            placebo = []
+            for cut in pd.date_range("2018-01-03", "2022-06-29", freq="W-WED"):
+                if abs((cut - RESOLUTION).days) < 7 * bw:
+                    continue
+                if pd.Timestamp("2020-03-01") - pd.Timedelta(weeks=bw) < cut < pd.Timestamp("2020-10-01") + pd.Timedelta(weeks=bw):
+                    continue          # pandemic releases
+                placebo.append(local_jump(pre, cut, y, bw)[0])
+            placebo = np.array(placebo)
+            rows.append({"outcome": y, "bandwidth_weeks": bw, "jump": b, "se": se,
+                         "placebo_dates": len(placebo),
+                         "placebo_p": float((np.abs(placebo) >= abs(b)).mean()),
+                         "placebo_sd": float(placebo.std())})
+    pd.DataFrame(rows).to_csv(TAB / "t7_stock_discontinuity.csv", index=False)
 
     def avg(a: str, b: str, col: str) -> float:
         return float(w[(w["date"] >= a) & (w["date"] <= b)][col].mean())

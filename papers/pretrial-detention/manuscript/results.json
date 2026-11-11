@@ -15,6 +15,15 @@
     "base_rate_p25": 0.0306003270263957,
     "base_rate_p75": 0.09669247009148486
   },
+  "bounds": {
+    "early_pct_per_sd": 3.780667773719265,
+    "early_ci_lo": -4.33061249093843,
+    "early_ci_hi": 12.57965880192286,
+    "largest_relative_decline_ruled_out_per_sd": 4.33061249093843,
+    "iqr_in_sd": 0.8088117376736846,
+    "largest_decline_ruled_out_p25_to_p75": 3.5174059452847297,
+    "mde_80_pct_per_sd": 12.328923104850421
+  },
   "permutation": {
     "estimate": 0.037109522443416594,
     "draws": 500,
