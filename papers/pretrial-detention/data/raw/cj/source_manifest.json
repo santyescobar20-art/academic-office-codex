@@ -1,0 +1,33 @@
+{
+  "landing_page": "https://fsweb.funcionjudicial.gob.ec/estadisticas/datoscj/portalestadistica.html",
+  "files": [
+    {
+      "file": "Boletas.rar",
+      "url": "https://fsweb.funcionjudicial.gob.ec/estadisticas/Boletas.rar",
+      "retrieved": "2026-11-11",
+      "bytes": 4733450,
+      "sha256": "3e46b5fa256a79952e60658496ea41e55d31a79f8ef55525c2c0c7390a01156d"
+    },
+    {
+      "file": "Audiencias.rar",
+      "url": "https://fsweb.funcionjudicial.gob.ec/estadisticas/Audiencias.rar",
+      "retrieved": "2026-11-11",
+      "bytes": 11732612,
+      "sha256": "728a813b7fba87604f8715c9eddac1c31e5cdd1cc21b0479a467f364de514d37"
+    },
+    {
+      "file": "04_DV01_BOLETAS.xlsx",
+      "url": "https://fsweb.funcionjudicial.gob.ec/estadisticas/04 DV01_BOLETAS.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 114249,
+      "sha256": "2ea33ee4e918982a584af5c8532d824163ee564f4eedafb66c47b5298e7a6a87"
+    },
+    {
+      "file": "04_DV01_AUDIENCIAS.xlsx",
+      "url": "https://fsweb.funcionjudicial.gob.ec/estadisticas/04 DV01_AUDIENCIAS.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 114018,
+      "sha256": "7159aab86dff0acb43da0d1feafbeda1b48fdf66c8b95695fcc935efe103575a"
+    }
+  ]
+}

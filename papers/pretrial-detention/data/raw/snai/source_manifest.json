@@ -1,0 +1,82 @@
+{
+  "landing_page": "https://www.atencionintegral.gob.ec/estadisticas/",
+  "files": [
+    {
+      "file": "Resumen-PPL-2017-27dic2017.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2022/02/Resumen-PPL-2017-27dic2017.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 5043623,
+      "sha256": "36ecd0f6b79bfd78a8c860f9c3759e3e36986cb1da2ff2ee98a5db16c27d2ade"
+    },
+    {
+      "file": "Resumen-PPL-2018-26dic2018.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2022/02/Resumen-PPL-2018-26dic2018.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1255274,
+      "sha256": "45586261c8e30b05bb099a728f97eb7f33f9f5931c59262c4b95a4dd7f9121de"
+    },
+    {
+      "file": "Resumen-PPL-2019-31dic2019.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2022/02/Resumen-PPL-2019-31dic2019.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1155332,
+      "sha256": "549e34a51164e8ca3ad052004360841a5f585dfe8e5acf4d3315e5ced79604a0"
+    },
+    {
+      "file": "Resumen-PPL-2020-30dic2020.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2022/02/Resumen-PPL-2020-30dic2020.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1038737,
+      "sha256": "52253e8b3c121f6262af5dad39688225ca99552ab476c10a4832dc872abd19dc"
+    },
+    {
+      "file": "Resumen-PPL-2021-29dic2021.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2022/02/Resumen-PPL-2021-29dic2021.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1033036,
+      "sha256": "58a5ecb093817edce51c4bec0a96b74f90a1005c8c61552f44309ad9bcb07e66"
+    },
+    {
+      "file": "Resumen-PPL-2022-30dic2022.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2023/01/Resumen-PPL-2022-30dic2022.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1050740,
+      "sha256": "b615e740e60e2cfe14b198ef3ae72f9dbc9514eb5e9568706930e09b38ad4533"
+    },
+    {
+      "file": "Resumen-PPL-2023-29dic2023-1.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2025/01/Resumen-PPL-2023-29dic2023-1.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1077292,
+      "sha256": "5fbc8a176176abdec3517b6591d0dd572db68690a49ab1989df146fade45d5bc"
+    },
+    {
+      "file": "Resumen-PPL-2024-27dic2024.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2025/01/Resumen-PPL-2024-27dic2024.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1076179,
+      "sha256": "f579c3f49bd5af17691bddca9d122ec3e7cf57c7f41300688b5f8a8d2ca20afa"
+    },
+    {
+      "file": "Reporte-mensual-PPL-DICIEMBRE-2025.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2026/01/Reporte-mensual-PPL-DICIEMBRE-2025.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1068885,
+      "sha256": "e8047250e8c221afbbca2c919688a64f145f9ad59e3b4632909f30c99bba694c"
+    },
+    {
+      "file": "Reporte-mensual-PPL-SEPTIEMBRE-2026-9.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2026/10/Reporte-mensual-PPL-SEPTIEMBRE-2026-9.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1144547,
+      "sha256": "9e39e24bb70833a842ba206fb8bc70201bfae7c1db803785d32ebf29b89ff9f4"
+    },
+    {
+      "file": "Indicador-ODS-16.3.2.xlsx",
+      "url": "https://www.atencionintegral.gob.ec/wp-content/uploads/2026/02/Indicador-ODS-16.3.2.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 154497,
+      "sha256": "82e9b011cd91f1397a7390b4bc34f6fa291631b0b068b913574f5c83cea539f7"
+    }
+  ]
+}
