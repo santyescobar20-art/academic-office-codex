@@ -1,0 +1,26 @@
+{
+  "landing_page": "https://www.datosabiertos.gob.ec/dataset/homicidios-intencionales",
+  "files": [
+    {
+      "file": "mdi_homicidios_intencionales_pm_historico.xlsx",
+      "url": "https://raw.githubusercontent.com/jp1309/crimen/main/data/raw/mdi_homicidios_intencionales_pm_historico.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 6458088,
+      "sha256": "c193f32698f0bfaec55f2bb0f63a9214f9bd4d7ba39f6341534b88f60fc54be0"
+    },
+    {
+      "file": "mdi_homicidios_intencionales_pm_actual.xlsx",
+      "url": "https://raw.githubusercontent.com/jp1309/crimen/main/data/raw/mdi_homicidios_intencionales_pm_actual.xlsx",
+      "retrieved": "2026-11-11",
+      "bytes": 1052661,
+      "sha256": "aa95ae368f6a0ac1c6b9cf31953eab8efa8f46cfe82a335726cfd8291074b3d1"
+    },
+    {
+      "file": "mirror_manifest.json",
+      "url": "https://raw.githubusercontent.com/jp1309/crimen/main/data/source_manifest.json",
+      "retrieved": "2026-11-11",
+      "bytes": 2099,
+      "sha256": "05ca1089dc64fa84b71aadf56d1773d311aa23178ca7a1c098e2c2e1d4e84987"
+    }
+  ]
+}

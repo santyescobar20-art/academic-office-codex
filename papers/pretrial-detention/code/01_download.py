@@ -41,7 +41,18 @@ SOURCES = {
         CJ + "04 DV01_AUDIENCIAS.xlsx",
     ],
 }
+# The national open-data portal rejects scripted downloads, so the homicide
+# files come from a public mirror that keeps the official spreadsheets
+# unchanged together with their checksums (github.com/jp1309/crimen).
+MIRROR = "https://raw.githubusercontent.com/jp1309/crimen/main/data/"
+SOURCES["mdi"] = [
+    MIRROR + "raw/mdi_homicidios_intencionales_pm_historico.xlsx",
+    MIRROR + "raw/mdi_homicidios_intencionales_pm_actual.xlsx",
+    MIRROR + "source_manifest.json",
+]
+
 LANDING = {
+    "mdi": "https://www.datosabiertos.gob.ec/dataset/homicidios-intencionales",
     "snai": "https://www.atencionintegral.gob.ec/estadisticas/",
     "cj": "https://fsweb.funcionjudicial.gob.ec/estadisticas/datoscj/portalestadistica.html",
 }
@@ -73,6 +84,8 @@ def main() -> None:
         entries = []
         for url in urls:
             name = url.rsplit("/", 1)[1].replace(" ", "_")
+            if name == "source_manifest.json":
+                name = "mirror_manifest.json"
             dest = folder / name
             if force or not dest.exists():
                 print("downloading", name)
