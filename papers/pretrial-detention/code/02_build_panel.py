@@ -3,6 +3,7 @@
 Outputs (data/processed):
   judge_year.csv      pretrial-detention orders, later outcomes and hearings by judge-court-year
   court_year.csv      the same aggregated to judicial unit
+  canton_year.csv     the same aggregated to canton, plus intentional homicides
   province_year.csv   the same aggregated to province, plus SNAI prison stock
   snai_weekly.csv     national weekly prison population by legal status, 2017-2026
   snai_center_year.csv  unsentenced share by prison, annual, 2012-2025
@@ -189,6 +190,22 @@ def snai_center_year() -> tuple[pd.DataFrame, pd.DataFrame]:
     return prov, cent
 
 
+def homicides_canton_year() -> pd.DataFrame:
+    frames = []
+    for name in ("historico", "actual"):
+        d = pd.read_excel(RAW / "mdi" / f"mdi_homicidios_intencionales_pm_{name}.xlsx",
+                          sheet_name="1. Homicidios Intencionales", header=0,
+                          usecols=["provincia", "canton", "fecha_infraccion"])
+        frames.append(d)
+    d = pd.concat(frames)
+    d["year"] = pd.to_datetime(d["fecha_infraccion"], errors="coerce").dt.year
+    d["province"] = d["provincia"].map(norm)
+    d["canton"] = d["canton"].map(norm)
+    return (d.dropna(subset=["year"]).astype({"year": int})
+            .groupby(["province", "canton", "year"]).size()
+            .rename("homicides").reset_index())
+
+
 def main() -> None:
     orders = build_orders()
     hearings = build_hearings()
@@ -201,6 +218,16 @@ def main() -> None:
 
     cy = jy.groupby(["province", "canton", "court", "year"], as_index=False)[num].sum()
     cy.to_csv(OUT / "court_year.csv", index=False)
+
+    hom = homicides_canton_year()
+    ky = jy.groupby(["province", "canton", "year"], as_index=False)[num].sum()
+    ky = ky.merge(hom, on=["province", "canton", "year"], how="left")
+    ky["homicides"] = ky["homicides"].fillna(0).astype(int)
+    ky.to_csv(OUT / "canton_year.csv", index=False)
+    unmatched = hom.merge(ky[["province", "canton"]].drop_duplicates(),
+                          on=["province", "canton"], how="left", indicator=True)
+    lost = unmatched.loc[unmatched["_merge"] == "left_only", "homicides"].sum()
+    print("homicides not matched to a judicial canton:", int(lost), "of", int(hom["homicides"].sum()))
 
     prov_stock, center = snai_center_year()
     py = jy.groupby(["province", "year"], as_index=False)[num].sum()
