@@ -70,6 +70,9 @@ def event_terms(prefix: str) -> str:
 
 
 def canton_models(k: pd.DataFrame) -> None:
+    allc = pd.read_csv(PROC / "canton_year.csv")
+    allc = allc[allc["year"].between(FIRST, LAST)]
+    results["coverage_share_of_orders"] = float(k["pp_orders"].sum() / allc["pp_orders"].sum())
     results["canton_sample"] = {
         "cantons": int(k["unit"].nunique()), "obs": int(len(k)),
         "base_rate_mean": float(k.drop_duplicates("unit")["base_rate"].mean()),
@@ -95,12 +98,14 @@ def canton_models(k: pd.DataFrame) -> None:
             t = tidy(f, rf"^{prefix}_\d")
             t["year"] = t["term"].str[-4:].astype(int)
             t["outcome"], t["exposure"] = outcome, prefix
-            pre = [f"{prefix}_{y}" for y in (2019, 2020)]
-            try:
-                w = f.wald_test(R=np.array([[1.0 if c == p else 0.0 for c in f._coefnames] for p in pre]))
-                t["pretrend_p"] = float(w["pvalue"])
-            except Exception:
-                t["pretrend_p"] = np.nan
+            # joint test that the two clean pre-period coefficients are zero
+            names = list(f._coefnames)
+            idx = [names.index(f"{prefix}_{y}") for y in (2019, 2020)]
+            bb = np.asarray(f.coef())[idx]
+            V = np.asarray(f._vcov)[np.ix_(idx, idx)]
+            from scipy import stats
+            t["pretrend_chi2"] = float(bb @ np.linalg.solve(V, bb))
+            t["pretrend_p"] = float(stats.chi2.sf(t["pretrend_chi2"].iloc[0], len(idx)))
             out.append(t)
     pd.concat(out).to_csv(TAB / "t3_event_study.csv", index=False)
 
