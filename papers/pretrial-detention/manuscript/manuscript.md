@@ -192,15 +192,15 @@ Figure 2 and Table 3 report the exposure design. The coefficients for 2019 and 2
 
 | Specification | Exposure × 2022-2023 | 95% CI (%) | Exposure × 2024-2026 | N |
 |:--|--:|--:|--:|--:|
-| Baseline | 0.037 (0.042) | [-4.3, +12.6] | 0.047 (0.045) | 1290 |
-| Province-year FE | -0.099 (0.075) | [-21.9, +5.0] | -0.059 (0.088) | 1280 |
-| Cluster province | 0.037 (0.024) | [-1.1, +8.9] | 0.047 (0.035) | 1290 |
-| No Guayaquil/Quito | -0.009 (0.066) | [-12.9, +12.7] | 0.045 (0.082) | 1270 |
-| No homicide control | 0.068 (0.045) | [-2.0, +17.0] | 0.081 (0.051) | 1290 |
-| Binary exposure | -0.042 (0.088) | [-19.3, +13.9] | -0.035 (0.104) | 1290 |
-| Placebo outcome: conviction committals | -0.244*** (0.054) | [-29.4, -13.0] | -0.180 (0.123) | 1290 |
-| Drop 2020 (pandemic) | 0.031 (0.042) | [-4.9, +11.9] | 0.040 (0.043) | 1161 |
-| Pre-period only 2019-2021 | 0.049 (0.040) | [-2.9, +13.7] | 0.058 (0.047) | 1032 |
+| Baseline | 0.037 (0.042) | [-4.3, +12.6] | 0.047 (0.045) | 1,290 |
+| Province-year FE | -0.099 (0.075) | [-21.9, +5.0] | -0.059 (0.088) | 1,280 |
+| Cluster province | 0.037 (0.024) | [-1.1, +8.9] | 0.047 (0.035) | 1,290 |
+| No Guayaquil/Quito | -0.009 (0.066) | [-12.9, +12.7] | 0.045 (0.082) | 1,270 |
+| No homicide control | 0.068 (0.045) | [-2.0, +17.0] | 0.081 (0.051) | 1,290 |
+| Binary exposure | -0.042 (0.088) | [-19.3, +13.9] | -0.035 (0.104) | 1,290 |
+| Placebo outcome: conviction committals | -0.244*** (0.054) | [-29.4, -13.0] | -0.180 (0.123) | 1,290 |
+| Drop 2020 (pandemic) | 0.031 (0.042) | [-4.9, +11.9] | 0.040 (0.043) | 1,161 |
+| Pre-period only 2019-2021 | 0.049 (0.040) | [-2.9, +13.7] | 0.058 (0.047) | 1,032 |
 
 *Note.* Poisson regressions of detention orders (committals after conviction in the placebo row) with canton and year fixed effects unless stated, log hearings as offset. Exposure is standardised pre-resolution reliance, or an above-median indicator in the binary row. Standard errors clustered by canton unless stated. * p < 0.10, ** p < 0.05, *** p < 0.01.
 
