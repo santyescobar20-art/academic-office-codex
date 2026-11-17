@@ -2,7 +2,9 @@
 
 English: reads manuscript/manuscript_src.md, writes manuscript.md (+ .docx).
 Spanish: reads manuscript/manuscript_src_es.md, writes manuscript_es.md (+ .docx).
-Run from the paper folder:  python code/05_build_manuscript.py [en|es|all]
+Politica Criminal: reads manuscript/manuscript_src_pc.md (Spanish, footnote citations,
+ISO 690), writes manuscript_pc.md and a .docx formatted to the journal's norms.
+Run from the paper folder:  python code/05_build_manuscript.py [en|es|pc|all]
 """
 import re
 import shutil
@@ -120,6 +122,16 @@ TEXT = {
 }
 
 
+TEXT["pc"] = dict(TEXT["es"], note="Nota:", plain=True, sources={
+    "{{TABLE1}}": "Consejo de la Judicatura, Ministerio del Interior y SNAI",
+    "{{TABLE2}}": "Consejo de la Judicatura y Ministerio del Interior",
+    "{{TABLE3}}": "Consejo de la Judicatura y Ministerio del Interior",
+    "{{TABLE4}}": "Consejo de la Judicatura y Ministerio del Interior",
+    "{{TABLE5}}": "Consejo de la Judicatura",
+    "{{TABLE6}}": "SNAI",
+})
+
+
 class Fmt:
     """Number formatting for each language (thousands and decimal marks)."""
 
@@ -144,6 +156,10 @@ def md(df: pd.DataFrame, caption: str, note: str, T: dict) -> str:
     head = "| " + " | ".join(df.columns) + " |"
     sep = "|" + "|".join([":--"] + ["--:"] * (len(df.columns) - 1)) + "|"
     body = ["| " + " | ".join(str(v) for v in row) + " |" for row in df.values]
+    if T.get("plain"):   # Politica Criminal: no bold or italics outside the allowed uses
+        cap = f'::: {{custom-style="PC Tabla"}}\n{caption}\n:::'
+        nota = f'::: {{custom-style="PC Nota"}}\n{T["note"]} {note}\n:::'
+        return "\n".join([cap, "", head, sep, *body, "", nota, ""])
     return "\n".join([f"**{caption}**", "", head, sep, *body, "", f"*{T['note']}* {note}", ""])
 
 
@@ -152,7 +168,7 @@ def stars(p: float) -> str:
 
 
 def build_tables(lang: str) -> dict:
-    T, F = TEXT[lang], Fmt(lang)
+    T, F = TEXT[lang], Fmt("es" if lang == "pc" else lang)
     est = lambda b, se, p: F.num(b, ".3f") + stars(p) + " (" + F.num(se, ".3f") + ")"
     spec = lambda s: T["spec"].get(s, s[0].upper() + s[1:])
     out = {}
@@ -224,27 +240,103 @@ def build_tables(lang: str) -> dict:
         cols[5]: t["placebo_dates"],
         cols[6]: t["placebo_p"].map(lambda v: F.num(v, ".2f")),
     }), T["t6_cap"], T["t6_note"], T)
+    if "sources" in T:
+        for key, src in T["sources"].items():
+            out[key] = _add_source(out[key], src)
     return out
 
 
+def _add_source(block: str, src: str) -> str:
+    """Append the data source to the table note (last fenced div)."""
+    head, sep, tail = block.rpartition("\n:::")
+    fuente = f" Fuente: elaboración propia con datos del {src}." if not src.startswith("SNAI") \
+        else " Fuente: elaboración propia con datos del SNAI."
+    return head + fuente + sep + tail
+
+
+def pc_reference_docx() -> Path:
+    """Word template for Politica Criminal: Times New Roman, justified, single spacing."""
+    from docx import Document
+    from docx.enum.style import WD_STYLE_TYPE
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.oxml.ns import qn
+    from docx.shared import Pt, RGBColor
+
+    ref = MAN / "pc_reference.docx"
+    raw = subprocess.run(["pandoc", "--print-default-data-file", "reference.docx"],
+                         capture_output=True, check=True).stdout
+    ref.write_bytes(raw)
+    doc = Document(str(ref))
+
+    def font(style, size, bold=False, italic=False, superscript=False):
+        f = style.font
+        f.name, f.size, f.bold, f.italic = "Times New Roman", Pt(size), bold, italic
+        f.color.rgb = RGBColor(0, 0, 0)
+        if superscript:
+            f.superscript = True
+        rpr = style.element.get_or_add_rPr()
+        fonts = rpr.find(qn("w:rFonts"))
+        if fonts is None:
+            fonts = rpr.makeelement(qn("w:rFonts"), {})
+            rpr.append(fonts)
+        for a in ("w:asciiTheme", "w:hAnsiTheme", "w:eastAsiaTheme", "w:cstheme"):
+            fonts.attrib.pop(qn(a), None)
+        for a in ("w:ascii", "w:hAnsi", "w:eastAsia", "w:cs"):
+            fonts.set(qn(a), "Times New Roman")
+
+    def para(style, align=WD_ALIGN_PARAGRAPH.JUSTIFY, before=0, after=12, keep=False):
+        pf = style.paragraph_format
+        pf.alignment, pf.line_spacing = align, 1.0
+        pf.space_before, pf.space_after = Pt(before), Pt(after)
+        pf.first_line_indent, pf.left_indent = Pt(0), Pt(0)
+        pf.keep_with_next = keep
+
+    styles = doc.styles
+    def get(name, kind=WD_STYLE_TYPE.PARAGRAPH):
+        # pandoc's template stores "Heading 1" capitalised, which styles[...] cannot look up
+        found = [st for st in styles if st.name == name or st.style_id == name.replace(" ", "")]
+        return found[0] if found else styles.add_style(name, kind)
+    for name in ("Normal", "Body Text", "First Paragraph", "Block Text"):
+        font(get(name), 12); para(get(name))
+    for name, size, bold, italic in (("Heading 1", 12, True, False), ("Heading 2", 11, True, False),
+                                     ("Heading 3", 11, False, False)):
+        font(get(name), size, bold, italic); para(get(name), WD_ALIGN_PARAGRAPH.LEFT, 6, 12, keep=True)
+    font(get("Compact"), 10); para(get("Compact"), WD_ALIGN_PARAGRAPH.LEFT, 0, 0)
+    font(get("Footnote Text"), 10); para(get("Footnote Text"), after=0)
+    font(get("Footnote Reference", WD_STYLE_TYPE.CHARACTER), 11, superscript=True)
+    for name in ("Image Caption", "Caption", "Table Caption"):
+        font(get(name), 11); para(get(name))
+    for name in ("Hyperlink",):
+        font(get(name, WD_STYLE_TYPE.CHARACTER), 12)
+    font(get("PC Titulo"), 12, bold=True); para(get("PC Titulo"), WD_ALIGN_PARAGRAPH.CENTER, 0, 6)
+    font(get("PC Centro"), 12); para(get("PC Centro"), WD_ALIGN_PARAGRAPH.CENTER, 0, 6)
+    font(get("PC Tabla"), 11); para(get("PC Tabla"), WD_ALIGN_PARAGRAPH.LEFT, 6, 6, keep=True)
+    font(get("PC Nota"), 10); para(get("PC Nota"))
+    doc.save(str(ref))
+    return ref
+
+
 def build(lang: str) -> None:
-    src, dst = ("manuscript_src.md", "manuscript") if lang == "en" else ("manuscript_src_es.md", "manuscript_es")
+    src, dst = {"en": ("manuscript_src.md", "manuscript"), "es": ("manuscript_src_es.md", "manuscript_es"),
+                "pc": ("manuscript_src_pc.md", "manuscript_pc")}[lang]
     text = (MAN / src).read_text()
     for key, table in build_tables(lang).items():
         assert key in text, key
         text = text.replace(key, table)
     (MAN / f"{dst}.md").write_text(text)
-    marker = "# References" if lang == "en" else "# Referencias"
+    marker = {"en": "# References", "es": "# Referencias", "pc": "# Bibliografía citada"}[lang]
     words = len([w for w in text.split(marker)[0].split() if any(ch.isalpha() for ch in w)])
     print(f"[{lang}] words before references (tables included): {words}")
     if shutil.which("pandoc"):
-        subprocess.run(["pandoc", f"{dst}.md", "-o", f"{dst}.docx", "--from",
-                        "markdown+tex_math_dollars+pipe_tables", "--resource-path", "."],
-                       cwd=MAN, check=True)
+        cmd = ["pandoc", f"{dst}.md", "-o", f"{dst}.docx", "--from",
+               "markdown+tex_math_dollars+pipe_tables+fenced_divs", "--resource-path", "."]
+        if lang == "pc":
+            cmd += ["--reference-doc", str(pc_reference_docx())]
+        subprocess.run(cmd, cwd=MAN, check=True)
         print(f"[{lang}] wrote {dst}.docx")
 
 
 if __name__ == "__main__":
     arg = sys.argv[1] if len(sys.argv) > 1 else "all"
-    for lang in (["en", "es"] if arg == "all" else [arg]):
+    for lang in (["en", "es", "pc"] if arg == "all" else [arg]):
         build(lang)

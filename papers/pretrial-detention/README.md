@@ -39,7 +39,7 @@ Every number in the manuscript is produced by the code in this folder.
 python code/02_build_panel.py        # panels in data/processed
 python code/03_estimate.py           # tables in manuscript/tables, results.json
 python code/04_figures.py            # figures in manuscript/figures
-python code/05_build_manuscript.py   # manuscript.md and manuscript.docx
+python code/05_build_manuscript.py   # English, Spanish and Política Criminal versions (.md and .docx)
 ```
 
 ## Main finding
@@ -47,3 +47,10 @@ python code/05_build_manuscript.py   # manuscript.md and manuscript.docx
 Detention orders per hearing fell 21% in 2022, but the fall began before the
 resolution, did not vary with prior reliance on detention, shows no break in
 the weekly prison series at the resolution date, and was reversed by 2025.
+
+## Versions
+
+- `manuscript/manuscript.docx`: English.
+- `manuscript/manuscript_es.docx`: Spanish, APA 7 author-date citations.
+- `manuscript/manuscript_pc.docx`: Spanish, formatted to the norms of *Política Criminal*
+  (footnote citations, ISO 690 bibliography). Its source is `manuscript/manuscript_src_pc.md`.

@@ -1,5 +1,17 @@
 # Pre-submission checklist
 
+## Política Criminal version (`manuscript/manuscript_pc.docx`)
+- [x] Times New Roman 12, justified, single spacing, extra space between paragraphs; footnotes TNR 10.
+- [x] Title in Spanish (bold) and English; author block placeholders centred.
+- [x] Abstracts in Spanish (197 words) and English (182 words); 5 keywords in each, comma-separated.
+- [x] Headings per ISO 2145: unnumbered Introducción and Conclusiones; numbered sections up to two levels; a) subdivisions in italics.
+- [x] Citations as footnotes (AUTHOR (year), pp.), "Bibliografía citada", "Normas citadas", "Jurisprudencia citada".
+- [x] Length about 46,500 characters with spaces before the bibliography (limit 25,000-100,000).
+- [ ] Fill in author name, degree, affiliation and e-mail, and the first footnote (funding or thesis) or delete it.
+- [ ] Read the journal's AI-use rules (PDF on its "Para autores" page) and make any declaration they require.
+- [ ] Equations: open the .docx in Word and check that the two display equations and the inline symbols render.
+
+
 ## Done
 - [x] Every figure and table is produced by the code in `code/` from public files stored with SHA-256 manifests.
 - [x] References checked one by one against Crossref (authors, year, journal, volume, pages, DOI).
